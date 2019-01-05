@@ -1,4 +1,4 @@
-import Modal from './vendor/a11y-dialog-component.esm.js';
+import Dialog from 'a11y-dialog-component';
 
 const editMultiSelect = {
   init() {
@@ -9,7 +9,9 @@ const editMultiSelect = {
     this.bindDragHandlers();
 
     this.modalId = "#modal-container";
-    this.modal = new Modal(this.modalId);
+    this.modal = new Dialog(this.modalId, {
+      closingSelector: '.js-dialog-close',
+    });
   },
 
   bindDragHandlers() {
