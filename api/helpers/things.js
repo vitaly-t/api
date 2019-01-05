@@ -66,7 +66,7 @@ const returnByType = (res, params, article, static) => {
       return res.status(500, "XML not implemented yet").render();
     case "html": // fall through
     default:
-      return res.status(200).render(type + "-" + "edit", { article, static });
+      return res.status(200).render(type + "-" + view, { article, static });
   }
 };
 
@@ -79,7 +79,7 @@ const parseGetParams = function(req, type) {
     userid: req.user
       ? as.number(req.user.user_id || req.user.userid || req.query.userid)
       : null,
-    returns: as.value(req.query.returns || "html")
+    returns: as.value(req.query.returns)
   };
 };
 
