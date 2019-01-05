@@ -94,7 +94,7 @@ module.exports = {
     return article[name][index][attr];
   },
   mediaLinkFieldName(name, index, attr) {
-    return `${name}[${index}][${attr}]`;
+    return `${name}[${index}].${attr}`;
   },
   mediaLinkPlaceholder(staticText, name, attr) {
     return staticMediaText(staticText, name, attr, "placeholder");
