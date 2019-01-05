@@ -20,6 +20,10 @@ const editRichText = {
     // setting to block after it's initialized so we don't
     // get a flash of unstyled content (FOUC)
     editorEl.style.display = 'block';
+
+    // set data-name attr on contenteditable for use when submitting form
+    const name = editorEl.getAttribute("data-name");
+    editorEl.querySelector("[contenteditable='true']").setAttribute("data-name", name);
   }
 };
 
