@@ -6,6 +6,7 @@ import editLocation from './edit-location.js';
 import editMediaLink from './edit-media-link.js';
 import editLinkList from './edit-link-list.js';
 import editMedia from './edit-media.js';
+import editWarning from './edit-warning.js';
 
 // polyfills
 elementClosestPolyfill();
@@ -23,4 +24,5 @@ if (window.location.pathname.indexOf('edit') > 0) {
   editMediaLink.init();
   editLinkList.init();
   editMedia.init();
+  editWarning.init();
 }
