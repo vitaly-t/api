@@ -1,10 +1,10 @@
-.edit-form {
+article.case-edit {
   width: 45%;
   margin: 0 auto 120px auto;
   background-color: #fff;
 }
 
-.edit-form .fieldset-header {
+article.case-edit .fieldset-header {
   margin-bottom: 30px;
 }
 
@@ -47,32 +47,32 @@
   display: block;
 }
 
-.edit-form-author-info {
+.case-edit-author-info {
   margin-bottom: 30px;
 }
 
-.edit-form-author-info h4 {
+.case-edit-author-info h4 {
   font-weight: 300;
 }
 
-.edit-form-author-info h4:first-child {
+.case-edit-author-info h4:first-child {
   margin-bottom: 15px;
 }
 
-.edit-form-author-info time {
+.case-edit-author-info time {
   display: block;
 }
 
-.edit-buttons {
+.case-edit-buttons {
   display: flex;
   justify-content: flex-start;
 }
 
-.edit-buttons button {
+.case-edit-buttons button {
   margin-right: 30px;
 }
 
-.floating-action-button {
+.case-edit-buttons .floating-publish-button {
   margin: 0;
   border-radius: 2em;
   padding: 1em;
@@ -81,7 +81,7 @@
   right: 3rem;
 }
 
-.floating-action-button svg {
+.case-edit-buttons .floating-publish-button svg {
   padding: .5em;
   transform: scale(2);
 }
@@ -273,22 +273,14 @@
 }
 
 @media (max-width: 1000px) {
-  .edit-form {
+  article.case-edit {
     width: 65%;
   }
 }
 
 @media (max-width: 700px) {
-  .edit-form {
+  article.case-edit {
     width: calc(100% - 4rem);
-  }
-}
-
-@media (max-width: 375px) {
-  .form-group p,
-  .form-group label,
-  .edit-form fieldset h2 {
-    word-break: break-word;
   }
 }
 
