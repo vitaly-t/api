@@ -21,6 +21,8 @@ elementClosestPolyfill();
 header.init();
 contactHelpFaqWidget.init();
 
+// todo: find a better way to deal with initializing modules only on certain pages.
+
 if (window.location.pathname === "/") {
   // home/search page
   homeSearch.init();
@@ -31,9 +33,8 @@ if (window.location.pathname.lastIndexOf('user') === 1) {
   userView.init();
 }
 
-const viewType = document.querySelector("[data-view]").getAttribute("data-view");
 
-if (viewType === "edit") {
+if (window.location.pathname.lastIndexOf('edit') > 0) {
   editMultiSelect.init();
   editRichText.init();
   editLocation.init();
@@ -43,6 +44,8 @@ if (viewType === "edit") {
   editSubmissionDetails.init();
   editTextarea.init();
 }
+
+const viewType = document.querySelector("[data-view]").getAttribute("data-view");
 
 if (viewType === "view") {
   viewSlideshow.init();

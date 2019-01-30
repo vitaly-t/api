@@ -5,6 +5,8 @@ const editWarning = {
     const formEl = document.querySelector(".js-edit-form");
     const initialFormData = serialize(formEl);
 
+    if (!formEl) return;
+
     window.addEventListener("beforeunload", (e) => {
       const currentFormData = serialize(formEl);
       // check if form data changed and if it was show default confirmation dialog
