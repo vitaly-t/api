@@ -21,8 +21,8 @@
 
       <fieldset>
         <h2>{{t "public_profile"}}</h2>
-        {{> edit-text name="name" value=user.name placeholderText=static.name_placeholder}}
-        {{> edit-text name="location" value=user.location placeholderText=static.location_placeholder}}
+        {{> edit-text name="name" value=user.name placeholderText=(t "name_placeholder")}}
+        {{> edit-text name="location" value=user.location placeholderText=(t "user_location_placeholder")}}
         {{> edit-richtext name="bio" value=user.bio}}
       </fieldset>
 

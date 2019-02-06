@@ -24,9 +24,6 @@ i18n.configure({
   // where to store json files - defaults to './locales' relative to modules directory
   directory: __dirname + '/api/locales',
 
-  // you may alter a site wide default locale
-  defaultLocale: 'de',
-
   // query parameter to switch locale (ie. /?locale=de) - defaults to NULL
   queryParameter: 'locale',
 });
