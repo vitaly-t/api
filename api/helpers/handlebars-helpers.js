@@ -1,4 +1,6 @@
 const moment = require("moment");
+const i18n = require("i18n");
+
 const faqContent = require("./faq-content.js");
 const aboutData = require("./data/about-data.js");
 const socialTagsTemplate = require("./social-tags-template.js");
@@ -402,5 +404,18 @@ module.exports = {
 
   getYearFromDate(date, format) {
     return moment(date).year();
+  },
+
+  // i18n
+  // register hbs helpers in res.locals' context which provides this.locale
+  t(...args) {
+    let options = args.pop();
+    return Reflect.apply(i18n.__, options.data.root, args);
+  },
+
+  // tn is for pluralization
+  tn(...args) {
+    let options = args.pop();
+    return Reflect.apply(i18n.__n, options.data.root, args);
   },
 };

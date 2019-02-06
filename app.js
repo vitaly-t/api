@@ -8,12 +8,27 @@ var exphbs = require("express-handlebars");
 const fs = require("fs");
 const handlebarsHelpers = require("./api/helpers/handlebars-helpers.js");
 const cookieParser = require('cookie-parser');
+const i18n = require("i18n");
 
 var hbs = exphbs.create({
   // Specify helpers which are only registered on this instance.
   defaultLayout: "main",
   extname: ".html",
   helpers: handlebarsHelpers,
+});
+
+i18n.configure({
+  // setup some locales - other locales default to en silently
+  locales:['en', 'de'],
+
+  // where to store json files - defaults to './locales' relative to modules directory
+  directory: __dirname + '/api/locales',
+
+  // you may alter a site wide default locale
+  defaultLocale: 'de',
+
+  // query parameter to switch locale (ie. /?locale=de) - defaults to NULL
+  queryParameter: 'locale',
 });
 
 // make the req var available as local var in templates
@@ -81,6 +96,7 @@ app.use(methodOverride()); // Do we actually use/need this?
 app.use(cors());
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(cookieParser());
+app.use(i18n.init);
 app.use(checkJwtRequired.unless({ method: ["OPTIONS", "GET"] }));
 app.use(ensureUser.unless({ method: ["OPTIONS", "GET"] }));
 app.use(
