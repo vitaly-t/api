@@ -403,4 +403,16 @@ module.exports = {
   getYearFromDate(date, format) {
     return moment(date).year();
   },
+
+  // legal/terms of use
+  getLocalizedTermsOfUseTemplate(req) {
+    // todo: if the user is logged in, we should use their language setting
+    const language = req.query.language || "en";
+    const availableLanguages = ["en", "fr"];
+    if (availableLanguages.includes(language)){
+      return "terms-of-use/" + language;
+    } else {
+      return "terms-of-use/en";
+    }
+  },
 };
