@@ -10,7 +10,7 @@
     {{!-- if user is logged in, show edit profile button --}}
     {{#if user.login}}
       <div class="user-view-edit-profile-button">
-        <a href="/user/{{user.id}}/edit" class="button button-red">{{t static "edit_profile"}}</a>
+        <a href="/user/{{user.id}}/edit" class="button button-red" data-cy="edit-profile">{{t static "edit_profile"}}</a>
       </div>
     {{/if}}
 

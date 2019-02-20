@@ -1,4 +1,7 @@
-const articleTypes = ['case', 'method', 'organization'];
+// todo: when ready, add these other article types to the articleTypes array
+// 'method', 'organization'
+
+const articleTypes = ['case'];
 
 articleTypes.forEach(type => editFormTest(type));
 
@@ -23,6 +26,7 @@ function editFormTest(type) {
 
       // it submits the form without errors
       cy.get("[data-cy=submit]").click();
+
       // todo: verify that form was submittied successfully
     });
   });
