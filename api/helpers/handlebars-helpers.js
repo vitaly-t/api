@@ -1,8 +1,16 @@
 const moment = require("moment");
+const md5 = require("js-md5");
 const faqContent = require("./faq-content.js");
 const aboutData = require("./data/about-data.js");
 const contentTypesData = require("./data/content-types-data.js");
 const socialTagsTemplate = require("./social-tags-template.js");
+
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  );
+}
 
 function mapIdTitleToKeyValue(options) {
   if (!options) return null;
@@ -236,7 +244,7 @@ module.exports = {
   },
 
   articleDataTitle(article) {
-    return article.type + " Data";
+    return toTitleCase(article.type + " Data");
   },
 
   // search layout helpers
@@ -274,9 +282,9 @@ module.exports = {
   },
 
   getNextPageNum(req, totalPages) {
-    const currentPageNum = req.query && req.query.page;
-    if (currentPageNum && parseInt(currentPageNum) !== parseInt(totalPages)) {
-      return parseInt(currentPageNum) + 1;
+    const currentPageNum = req.query && parseInt(req.query.page) || 1;
+    if (currentPageNum !== parseInt(totalPages)) {
+      return currentPageNum + 1;
     } else {
       return totalPages;
     }
@@ -347,9 +355,50 @@ module.exports = {
     return initials.toUpperCase();
   },
 
+  isProfileOwner(user, profile) {
+    if (!user || !profile) return false;
+
+    return user.id === profile.id;
+  },
+
+  getGravatarUrl(email) {
+    if (!email) return;
+
+    const emailHash = md5(email);
+    return `https://www.gravatar.com/avatar/${emailHash}`;
+  },
+
+  getContributionsForProfile(profile) {
+    const contributionTypes = ["cases", "methods", "organizations"];
+    // merge all article types into 1 array
+    let allContributions = [];
+    contributionTypes.forEach(type => {
+      allContributions = allContributions.concat(profile[type]);
+    });
+    return allContributions;
+  },
+
   // utilities
   currentUrl(req) {
     return currentUrl(req);
+  },
+
+  isEditView(req) {
+    const baseUrls = ["/case", "/method", "/organization", "/user"];
+    return baseUrls.includes(req.baseUrl) && req.path.indexOf("edit") >= 0;
+  },
+
+  isReaderView(req) {
+    const baseUrls = ["/case", "/method", "/organization"];
+    return baseUrls.includes(req.baseUrl) && req.path.indexOf("edit") === -1;
+  },
+
+  isHomeSearchView(req) {
+    return req.path === "/";
+  },
+
+  isUserView(req) {
+    return req.baseUrl === "/user" && req.path.indexOf("edit") === -1;
   },
 
   getFaqContent() {
