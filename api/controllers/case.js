@@ -150,12 +150,12 @@ async function maybeUpdateUserText(req, res) {
 function getUpdatedCase(user, params, newCase, oldCase) {
   const updatedCase = {};
   // admin-only
-  if (user.isadmin) {
+  if (user.isadmin && newCase) {
     updatedCase.featured = as.boolean(newCase.featured);
     updatedCase.hidden = as.boolean(newCase.hidden);
-    updatedCase.original_language = as.text(newCase.original_langauge);
+    updatedCase.original_language = as.text(newCase.original_language);
     updatedCase.post_date = as.date(newCase.post_date);
-  } else {
+  } else if (oldCase) {
     updatedCase.featured = as.boolean(oldCase.featured);
     updatedCase.hidden = as.boolean(oldCase.hidden);
     updatedCase.original_language = as.text(oldCase.original_language);
@@ -331,24 +331,57 @@ router.post("/:thingid", async (req, res) => {
     const { updatedText, author, oldCase } = maybeUpdateUserText(req, res);
     const updatedCase = getUpdatedCase(user, params, newCase, oldCase);
     console.warn("updatedCase: %s", JSON.stringify(updatedCase));
-    if (updatedText) {
-      await db.tx("update-case", t => {
-        return t.batch([
-          t.none(INSERT_AUTHOR, author),
-          t.none(INSERT_LOCALIZED_TEXT, updatedText),
-          t.none(UPDATE_CASE, updatedCase),
-          t.none("REFRESH MATERIALIZED VIEW search_index_en;")
-        ]);
-      });
-    } else {
-      await db.tx("update-case", t => {
-        return t.batch([
-          t.none(UPDATE_CASE, updatedCase),
-          t.none("REFRESH MATERIALIZED VIEW search_index_en;")
-        ]);
-      });
-    }
-    res.redirect(req.originalUrl.replace("/edit", ""));
+    // if (updatedText) {
+    //   await db.tx("update-case", t => {
+    //     return t.batch([
+    //       t.none(INSERT_AUTHOR, author),
+    //       t.none(INSERT_LOCALIZED_TEXT, updatedText),
+    //       t.none(UPDATE_CASE, updatedCase),
+    //       t.none("REFRESH MATERIALIZED VIEW search_index_en;")
+    //     ]);
+    //   });
+    // } else {
+    //   await db.tx("update-case", t => {
+    //     return t.batch([
+    //       t.none(UPDATE_CASE, updatedCase),
+    //       t.none("REFRESH MATERIALIZED VIEW search_index_en;")
+    //     ]);
+    //   });
+    // }
+
+
+
+    // states
+    // success
+    //
+    // 2+ validation errors
+
+    // success
+    // res.status(200).json({
+    //   "success": true,
+    //   "payload": updatedCase,
+    // });
+
+    // 1 validation error
+    res.status(200).json({
+      "success": false,
+      "errors": [{
+        "message": "Some human readable text about the validation error. Eg: Title cannot be blank"
+      }],
+    });
+
+    // 1 validation error
+    // res.status(200).json({
+    //   "success": false,
+    //   "errors": [{
+    //     "message": "Some human readable text about the validation error. Eg: Title cannot be blank"
+    //   },
+    //   {
+    //     "message": "Some human readable text about the validation error. Eg: Title cannot be blank"
+    //   }],
+    // });
+
+    //res.redirect(req.originalUrl.replace("/edit", ""));
   } catch (error) {
     log.error(
       "Exception in PUT /%s/%s => %s",

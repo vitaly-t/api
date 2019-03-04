@@ -86,7 +86,8 @@ async function commonUserHandler(required, err, req, res, next) {
       userEmail: user.email,
       userName: user.name || user.email,
       joinDate: user.created_at,
-      auth0UserId: auth0UserId,
+      // auth0UserId is never defined, throws error
+      // auth0UserId: auth0UserId,
       pictureUrl: pictureUrl,
       bio: ""
     });
