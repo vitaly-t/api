@@ -14,6 +14,13 @@ var serialize = function (form) {
 
     var field = form.elements[i];
 
+    // don't send up the value of the multi-select select field since we
+    // are tracking the list of values in an array of hidden text fields
+    if (field.classList.contains("js-edit-multi-select")) continue;
+
+    // don't include temporary field values
+    if (field.name.startsWith("temporary-")) continue;
+
     // Don't serialize fields without a name, submits, buttons and reset inputs, and disabled fields
     if (!field.name || field.disabled || field.type === 'reset' || field.type === 'submit' || field.type === 'button') continue;
 
