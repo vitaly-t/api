@@ -16,6 +16,15 @@ const researchStaticText = require("./static-text/research-static-text.js");
 const teachingStaticText = require("./static-text/teaching-static-text.js");
 const contentTypesText = require("./static-text/content-types-static-text.js");
 
+function getGATrackingId() {
+  if (app.get("env") === "production") {
+    return "UA-132033152-1";
+  } else {
+    // development or staging
+    return "UA-132033152-2";
+  }
+};
+
 var hbs = exphbs.create({
   // Specify helpers which are only registered on this instance.
   defaultLayout: "main",
@@ -25,17 +34,10 @@ var hbs = exphbs.create({
 
 // make data available as local vars in templates
 app.use((req, res, next) => {
-  const getGATrackingId = () => {
-    if (app.get("env") === "production") {
-      return "UA-132033152-1";
-    } else {
-      // development or staging
-      return "UA-132033152-2";
-    }
-  };
-
   res.locals.req = req;
   res.locals.GA_TRACKING_ID = getGATrackingId();
+  res.locals.static = sharedStaticText;
+  console.log('sharedStaticText', sharedStaticText)
   next();
 });
 
