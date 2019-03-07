@@ -14,8 +14,8 @@
       <ul class="unstyled-list">
         {{#each (getFaqContent)}}
           <li>
-            <a href="#">{{q}}</a>
-            <div class="faq-answer js-faq-answer">{{{a}}}</div>
+            <a href="#">{{t ../static questionKey}}</a>
+            <div class="faq-answer js-faq-answer">{{{t ../static answerKey}}}</div>
           </li>
         {{/each}}
       </ul>
