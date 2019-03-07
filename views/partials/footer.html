@@ -2,24 +2,25 @@
   <section>
     <nav class="footer-main-nav">
       <ul class="nav-list">
-        <li><a href="/about">About</a></li>
-        <li><a href="/research">Research</a></li>
-        <li><a href="/teaching">Teaching</a></li>
+        <li><a href="/about">{{t static "About"}}</a></li>
+        <li><a href="/research">{{t static "Research"}}</a></li>
+        <li><a href="/teaching">{{t static "Teaching"}}</a></li>
       </ul>
       <ul class="nav-list">
-        <li><a href="/?tab=tab-cases">Cases</a></li>
-        <li><a href="/?tab=tab-methods">Methods</a></li>
-        <li><a href="/?tab=tab-organizations">Organizations</a></li>
+        <li><a href="/?tab=tab-cases">{{t static "Cases"}}</a></li>
+        <li><a href="/?tab=tab-methods">{{t static "Methods"}}</a></li>
+        <li><a href="/?tab=tab-organizations">{{t static "Organizations"}}</a></li>
       </ul>
       <ul class="nav-list">
-        <li><a href="/help">Help & Contact</a></li>
-        <li><a href="/legal">Terms of Use</a></li>
+        <li><a href="/help">{{t static "Help & Contact"}}</a></li>
+        <li><a href="/legal">{{t static "Terms of Use"}}</a></li>
       </ul>
     </nav>
 
     <div class="footer-description">
       <h3>Participedia</h3>
-      <p>A global community sharing knowledge and stories about public participation</p>
+      {{log static}}
+      <p>{{t static "footer.tagline"}}</p>
     </div>
 
     <nav class="footer-social-nav">
@@ -30,7 +31,7 @@
             href="https://www.facebook.com/Participedia/"
           >
             {{> icon-facebook }}
-            <span class="sr-only">Particpedia on Facebook</span>
+            <span class="sr-only">{{t static "Particpedia on Facebook"}}</span>
           </a>
         </li>
         <li>
@@ -39,7 +40,7 @@
             href="https://twitter.com/participedia"
           >
             {{> icon-twitter }}
-            <span class="sr-only">Participedia on Twitter</span>
+            <span class="sr-only">{{t static "Participedia on Twitter"}}</span>
           </a>
         </li>
         <li>
@@ -48,7 +49,7 @@
             href="https://www.linkedin.com/company/participedia"
           >
             {{> icon-linkedIn }}
-            <span class="sr-only">Participedia on LinkedIn</span>
+            <span class="sr-only">{{t static "Participedia on LinkedIn"}}</span>
           </a>
         </li>
       </ul>

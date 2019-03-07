@@ -187,7 +187,6 @@ router.get("/", async function(req, res) {
           results,
           user_query,
           parsed_query,
-          static: staticText,
           params,
           user: req.user || null
         });
@@ -197,7 +196,6 @@ router.get("/", async function(req, res) {
           pages,
           searchhits,
           results,
-          static: staticText,
           params,
           user: req.user || null
         });
@@ -213,7 +211,6 @@ router.get("/", async function(req, res) {
           pages,
           searchhits,
           results,
-          static: staticText,
           params,
           user: req.user || null
         });

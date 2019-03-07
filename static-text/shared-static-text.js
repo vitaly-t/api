@@ -135,4 +135,12 @@ module.exports = {
   "go to profile": "go to profile",
 
   "Newsletter Sign Up": "Newsletter Sign Up",
+
+  "footer.tagline": "A global community sharing knowledge and stories about public participation",
+
+  "Particpedia on Facebook": "Particpedia on Facebook",
+
+  "Participedia on Twitter": "Participedia on Twitter",
+
+  "Participedia on LinkedIn": "Participedia on LinkedIn",
 }

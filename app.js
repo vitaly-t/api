@@ -37,7 +37,6 @@ app.use((req, res, next) => {
   res.locals.req = req;
   res.locals.GA_TRACKING_ID = getGATrackingId();
   res.locals.static = sharedStaticText;
-  console.log('sharedStaticText', sharedStaticText)
   next();
 });
 
