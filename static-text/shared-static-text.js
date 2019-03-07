@@ -113,4 +113,26 @@ module.exports = {
   "FAQ": "FAQ",
 
   "Email Support Team": "Email Support Team",
+
+  "Home": "Home",
+
+  "About": "About",
+
+  "Help & Contact": "Help & Contact",
+
+  "Terms of Use": "Terms of Use",
+
+  "Quick Submit": "Quick Submit",
+
+  "Profile": "Profile",
+
+  "Login": "Login",
+
+  "open menu": "open menu",
+
+  "close menu": "close menu",
+
+  "go to profile": "go to profile",
+
+  "Newsletter Sign Up": "Newsletter Sign Up",
 }

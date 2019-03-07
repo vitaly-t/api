@@ -2,35 +2,35 @@
   <nav class="sidebar-menu js-sidebar-menu" id="sidebar-menu">
     <div class="sidebar-menu-inner-container">
       <ul class="nav-list sidebar-menu-main-menu">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/teaching">Teaching</a></li>
-        <li><a href="/research">Research</a></li>
-        <li><a href="/help">Help & Contact</a></li>
-        <li><a href="/legal">Terms of Use</a></li>
+        <li><a href="/">{{t static "Home"}}</a></li>
+        <li><a href="/about">{{t static "About"}}</a></li>
+        <li><a href="/teaching">{{t static "Teaching"}}</a></li>
+        <li><a href="/research">{{t static "Research"}}</a></li>
+        <li><a href="/help">{{t static "Help & Contact"}}</a></li>
+        <li><a href="/legal">{{t static "Terms of Use"}}</a></li>
       </ul>
 
       <ul class="nav-list sidebar-menu-additional-nav">
         <li>
           <a href="/content-chooser" class="button button-red">
-            {{> icon-add }} Quick Submit
+            {{> icon-add }} {{t static "Quick Submit"}}
           </a>
         </li>
         <li>
           {{#if user}}
           <a href="/user/{{user.id}}" class="button button-dark-grey">
-            Profile
+            {{t static "Profile"}}
           </a>
           {{else}}
           <button type="button" class="button button-dark-grey js-login-button">
-            Login
+            {{t static "Login"}}
           </button>
           {{/if}}
         </li>
         <li>
           <div class="sidebar-menu-newsletter-container-mobile">
             <a href="https://mailchi.mp/participedia/subscribe" target="_blank" class="button button-light-grey">
-              Newsletter Sign Up
+              {{t static "Newsletter Sign Up"}}
             </a>
           </div>
         </li>
@@ -48,11 +48,11 @@
     <ul class="nav-list">
       <li class="menu-icon-container">
         <a href="#sidebar-menu" class="sidebar-menu-closed">
-          <span class="sr-only">open menu</span>
+          <span class="sr-only">{{t static "open menu"}}</span>
           {{> icon-hamburger }}
         </a>
         <a href="#" class="sidebar-menu-open">
-          <span class="sr-only">close menu</span>
+          <span class="sr-only">{{t static "close menu"}}</span>
           {{> icon-hamburger }}
         </a>
       </li>
@@ -67,13 +67,13 @@
       </li>
       <li class="quick-submit-container">
         <a href="/content-chooser" class="button button-white">
-          {{> icon-add }} Quick Submit
+          {{> icon-add }} {{t static "Quick Submit"}}
         </a>
       </li>
       <li>
         {{#if user}}
         <a href="/user/{{user.id}}" class="header-profile-link">
-          <span class="sr-only">goto profile</span>
+          <span class="sr-only">{{t static "go to profile"}}</span>
           {{#if user.picture_url}}
           <img
             src="{{user.picture_url}}"
@@ -89,7 +89,7 @@
         </a>
         {{else}}
         <button type="button" class="button button-dark-grey js-login-button">
-          Login
+          {{t static "Login"}}
         </button>
         {{/if}}
       </li>
