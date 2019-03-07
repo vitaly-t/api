@@ -105,4 +105,12 @@ module.exports = {
 
   "faq.question.11": "How do I access my bookmarked content?",
   "faq.answer.11": "Visit your personal profile page to access your bookmarked content.",
+
+  "Participedia Help": "Participedia Help",
+
+  "Contact Us": "Contact Us",
+
+  "FAQ": "FAQ",
+
+  "Email Support Team": "Email Support Team",
 }
