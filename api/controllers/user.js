@@ -4,16 +4,56 @@ let router = express.Router(); // eslint-disable-line new-cap
 let cache = require("apicache");
 let log = require("winston");
 let { db, sql, as } = require("../helpers/db");
+let uniqBy = require('lodash/uniqBy');
 
 const USER_BY_ID = sql("../sql/user_by_id.sql");
 const UPDATE_USER = sql("../sql/update_user.sql");
 
 async function getUserById(userId, req, res) {
   try {
-    const result = await db.oneOrNone(USER_BY_ID, {
+    let result = await db.oneOrNone(USER_BY_ID, {
       userId: userId,
       language: req.params.language || "en"
     });
+
+    /*
+
+    `result` is an object that includes keys for thing types: cases, methods, organizations and bookmarks
+    each type is an empty array or an array of objects
+    there is a bug in USER_BY_ID sql that returns multiple objects for a given thing id -- it returns a new object for every change that the author made to the thing
+
+    the following function will remove duplicate ids for each of the thing types so we are only passing down what is needed to the client
+
+    let result = [{id: 5122, title: "title-1"}, {id: 5122, title: "title-2"}];
+    result = deDupedResult(result);
+    // [{id: 5122, title: "title-2"}]
+
+    */
+
+    const deDupedResult = (result) => {
+      const newResult = Object.assign({}, result);
+      const thingTypes = ["cases", "methods", "organizations", "bookmarks"];
+
+      thingTypes.forEach(type => {
+        const things = newResult.user[type];
+        // get all items with unique ids, then map ids to array
+        const uniqueIds = uniqBy(things, "id").map(thing => thing.id);
+
+        // for each unique id, return the last item in the list
+        const newThings = uniqueIds.map(id => {
+          const filteredItems = things.filter(m => m.id === id);
+          // select last item in filtered items list
+          return filteredItems[filteredItems.length - 1];
+        });
+
+        newResult.user[type] = newThings;
+      });
+
+      return newResult;
+    }
+
+    result = deDupedResult(result);
+
     if (!result) {
       return res
         .status(404)
