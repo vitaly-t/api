@@ -357,20 +357,19 @@ router.post("/:thingid", async (req, res) => {
               0: Error: Property 'original_language' doesn't exist.
 
       */
-      // await db.tx("update-case", t => {
-      //   return t.batch([
-      //     t.none(UPDATE_CASE, updatedCase),
-      //     t.none("REFRESH MATERIALIZED VIEW search_index_en;")
-      //   ]);
-      // });
+      await db.tx("update-case", t => {
+        return t.batch([
+          t.none(UPDATE_CASE, updatedCase),
+          t.none("REFRESH MATERIALIZED VIEW search_index_en;")
+        ]);
+      });
+
+      // the client expects this request to respond with json
+      // save successful response
+      res.status(200).json({
+        OK: true,
+      });
     }
-
-    // the client expects this request to respond with json
-    // save successful response
-    res.status(200).json({
-      OK: true,
-    });
-
   } catch (error) {
     log.error(
       "Exception in PUT /%s/%s => %s",
