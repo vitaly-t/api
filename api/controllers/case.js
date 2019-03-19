@@ -27,6 +27,8 @@ const {
   fixUpURLs
 } = require("../helpers/things");
 
+const articleText = require("../../static-text/article-text.js");
+
 /**
  * @api {post} /case/new Create new case
  * @apiGroup Cases
@@ -423,7 +425,8 @@ router.get("/:thingid/", async (req, res) => {
   const articleRow = await db.one(CASE_VIEW_BY_ID, params);
   const article = articleRow.results;
   fixUpURLs(article);
-  const staticText = await db.one(CASE_VIEW_STATIC, params);
+  const staticTextFromDB = await db.one(CASE_VIEW_STATIC, params);
+  const staticText = Object.assign({}, staticTextFromDB, articleText);
   returnByType(res, params, article, staticText, req.user);
 });
 
