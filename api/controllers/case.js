@@ -437,7 +437,7 @@ router.get("/:thingid/edit", async (req, res) => {
   const article = articleRow.results;
   fixUpURLs(article);
   const staticResults = await db.one(CASE_EDIT_STATIC, params);
-  const staticText = staticResults.static;
+  let staticText = staticResults.static;
   const authorsResult = await db.one(
     "SELECT to_json(array_agg((id, name)::object_title)) AS authors FROM users;"
   );
@@ -452,6 +452,8 @@ router.get("/:thingid/edit", async (req, res) => {
     params
   );
   staticText.methods = methodsResult.methods;
+
+  staticText.labels = Object.assign({}, staticText.labels, articleText);
   returnByType(res, params, article, staticText, req.user);
 });
 
