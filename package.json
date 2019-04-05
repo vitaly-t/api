@@ -61,6 +61,7 @@
     "chai": "^4.0.2",
     "chai-http": "^4.2.1",
     "csv": "^5.1.0",
+    "cypress": "^3.1.5",
     "eslint": "^5.12.1",
     "eslint-config-google": "^0.9.1",
     "eslint-config-prettier": "^4.0.0",
@@ -69,10 +70,15 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "prettier": "^1.15.3",
+    "wait-on": "^3.2.0",
     "npm-run-all": "^4.1.5",
     "watchify": "^3.11.0"
   },
   "scripts": {
+    "start-and-test-cypress": "npm start & wait-on http://localhost:3001 & npm run cy:run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:verify": "cypress verify",
     "heroku-postbuild": "npm run build",
     "start": "nodemon server.js",
     "watch": "npm-run-all --parallel watch:*",
