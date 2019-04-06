@@ -19,6 +19,7 @@ function editFormTest(type) {
       cy.url().should("include", "https://participedia.auth0.com/login");
     });
 
+    // this needs to be in it's own test becuase you can only visit one domain per test
     it("goes to /", () => {
       cy.visit("/");
     });
