@@ -26,58 +26,39 @@
 
 const auth0 = require("auth0-js");
 
-Cypress.Commands.add("login", ({
-  username: "alanna.scott+cypress_test@gmail.com",
-  password: "cypress",
-}) => {
-
-  Cypress.log({
-    name: "loginViaAuth0"
-  });
-
-  const webAuth = new auth0.WebAuth({
-    // Get this from https://manage.auth0.com/#/applications and your application
-    domain: "participedia.auth0.com",
-    // Get this from https://manage.auth0.com/#/applications and your application
-    clientID: "lORPmEONgX2K71SX7fk35X5PNZOCaSfU",
-    responseType: "token id_token"
-  });
-
-  webAuth.client.login(
-    {
-      realm: "Username-Password-Authentication",
-      username,
-      password,
-      // Get this from https://manage.auth0.com/#/apis and your api, use the identifier property
-      audience: "https://participedia.auth0.com/api/v2/",
-      scope: "openid email profile"
-    },
-    function(err, authResult) {
-      // Auth tokens in the result or an error
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        const token = {
-          accessToken: authResult.accessToken,
-          idToken: authResult.idToken,
-          // Set the time that the access token will expire at
-          expiresAt: authResult.expiresIn * 1000 + new Date().getTime()
-        };
-
-        window.sessionStorage.setItem(
-          "my-super-duper-app:storage_token",
-          JSON.stringify(token)
-        );
-      } else {
-        console.error("Problem logging into Auth0", err);
-        throw err;
-      }
+Cypress.Commands.add(
+  "login",
+  (
+    overrides = {
+      username: "alanna.scott+cypress_test@gmail.com",
+      password: "cypress"
     }
-  );
-});
+  ) => {
+
+    // input username and password
+    cy.get("input[name=username]").type(overrides.username);
+    cy.get("input[name=password]").type(overrides.password);
+    cy.get(".auth0-lock-submit").click();
+
+    // wait for redirect
+    cy.wait(2000);
+  }
+);
 
 Cypress.Commands.add("loginAsAdmin", (overrides = {}) => {
+  Cypress.log({
+    name: "loginAsAdmin"
+  });
   // todo: create test admin account
   // cy.login({
   //   email: "",
   //   password: "",
   // });
+});
+
+Cypress.Commands.add("logout", (overrides = {}) => {
+  Cypress.log({
+    name: "logout"
+  });
+  cy.visit("/logout");
 });
