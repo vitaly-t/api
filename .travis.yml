@@ -20,6 +20,7 @@ services:
   - postgresql
 defaults: &defaults
   script:
+    - npm run watch &
     - npm start -- --silent &
     - npm run cy:run
     # after all tests finish running we need
