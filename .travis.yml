@@ -25,7 +25,7 @@ before_script:
   - npm i
   #   ## print all Travis environment variables for debugging
   - $(npm bin)/print-env TRAVIS
-  - npm start
+  - npm start &
   - sleep 3
 script:
   - npm run cy:run
