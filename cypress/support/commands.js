@@ -39,6 +39,7 @@ Cypress.Commands.add(
     cy.get("input[name=username]").type(overrides.username);
     cy.get("input[name=password]").type(overrides.password);
     cy.get(".auth0-lock-submit").click();
+    cu.url().should("include", "localhost")
 
     // wait for redirect
     cy.wait(4000);
