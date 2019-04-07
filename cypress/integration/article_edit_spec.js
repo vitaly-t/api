@@ -1,10 +1,9 @@
 const CYPRESS_TEST_EMAIL = "alanna.scott+cypress_test@gmail.com";
 const CYPRESS_TEST_PASSWORD = "cypress";
 
+// add method and case when those pages are working
+// const articleTypes = ["case", "method", "organization"];
 const articleTypes = ["case"];
-//todo: add method and organization once they are working ['case', 'method', 'organization'];
-
-//cy.clearLocalStorage() and cy.clearCookies()
 
 articleTypes.forEach(type => editFormTest(type));
 
