@@ -99,7 +99,7 @@
     "deployprod": "git push participedia-api",
     "deploystage": "git push participedia-stage",
     "coverage": "NODE_ENV=test istanbul cover _mocha -- -R spec && open coverage/lcov-report/index.html",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha & npm start & wait-on http://localhost:3001 & npm run cy:run",
     "backuplocal": "pg_dump participedia > ppedia_local.sql",
     "backupprod": "pg_dump -d \"${DATABASE_PROD_URL}\" > ppedia_prod.sql",
     "backupstage": "pg_dump -d \"${DATABASE_STAGE_URL}\" > ppedia_stage.sql",

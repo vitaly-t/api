@@ -17,8 +17,6 @@ services:
   - postgresql
 install:
   - npm ci
-script:
-  - npm run cy:run
 before_script:
   - psql -a -U postgres -c 'create database participedia;'
   - psql -a -U postgres -d participedia -f setup.sql
