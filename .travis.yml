@@ -26,7 +26,7 @@ before_script:
   - npm start &
   - sleep 3
 script:
-  - npm run start-and-test-cypress
+  - npm run start-server-and-test-cmd
 # deploy:
 #   provider: heroku
 #   api_key:
