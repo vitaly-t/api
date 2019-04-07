@@ -18,10 +18,10 @@ services:
 install:
   - npm ci
 script:
-  - npm run start-and-test-cypress
+  - npm run test_cypress
 before_script:
-  - psql -a -U postgres -c 'create database participedia;'
-  - psql -a -U postgres -d participedia -f setup.sql
+  - psql -a -U postgres -c 'create database test-participedia;'
+  - psql -a -U postgres -d test-participedia -f setup.sql
   - node migrations/import_json.js
 # deploy:
 #   provider: heroku
