@@ -71,13 +71,9 @@
     "mocha": "^5.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
-    "start-server-and-test": "1.7.13",
-    "wait-on": "^3.2.0",
     "watchify": "^3.11.0"
   },
   "scripts": {
-    "start-server-and-test-cmd": "start-server-and-test start http://localhost:3001 cy:run",
-    "start-and-test-cypress": "npm start & wait-on http://localhost:3001 & npm run cy:run",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome",
     "cy:verify": "cypress verify",
