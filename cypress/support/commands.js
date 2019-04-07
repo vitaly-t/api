@@ -34,7 +34,7 @@ Cypress.Commands.add(
       password: "cypress"
     }
   ) => {
-
+    cy.wait(2000);
     // input username and password
     cy.get("input[name=username]").type(overrides.username);
     cy.get("input[name=password]").type(overrides.password);
