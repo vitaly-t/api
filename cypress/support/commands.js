@@ -34,14 +34,14 @@ Cypress.Commands.add(
       password: "cypress"
     }
   ) => {
-    cy.wait(2000);
+    cy.wait(4000);
     // input username and password
     cy.get("input[name=username]").type(overrides.username);
     cy.get("input[name=password]").type(overrides.password);
     cy.get(".auth0-lock-submit").click();
 
     // wait for redirect
-    cy.wait(2000);
+    cy.wait(4000);
   }
 );
 
