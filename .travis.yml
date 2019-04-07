@@ -18,11 +18,13 @@ services:
 install:
   - npm ci
 script:
-  - npm run runcypresst
+  - npm run cy:run
 before_script:
   - psql -a -U postgres -c 'create database participedia;'
   - psql -a -U postgres -d participedia -f setup.sql
   - node migrations/import_json.js
+  - npm start &
+  - sleep 4
 # deploy:
 #   provider: heroku
 #   api_key:
