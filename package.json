@@ -77,7 +77,7 @@
   "scripts": {
     "start-and-test-cypress": "npm start & wait-on http://localhost:3001 & npm run cy:run",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --browser chrome",
     "cy:verify": "cypress verify",
     "heroku-postbuild": "npm run build",
     "start": "nodemon server.js",
