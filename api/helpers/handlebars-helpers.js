@@ -6,6 +6,7 @@ const contentTypesData = require("./data/content-types-data.js");
 const socialTagsTemplate = require("./social-tags-template.js");
 const sharedFieldOptions = require("./shared-field-options.js");
 const searchFiltersList = require("./search-filters-list.js");
+const countries = require("./countries.js");
 
 const LOCATION_FIELD_NAMES = [
   "address1",
@@ -528,6 +529,10 @@ module.exports = {
   },
 
   getOptionsForFilterKey(key) {
-    return sharedFieldOptions[key];
+    if (key === "country") {
+      return countries;
+    } else {
+      return sharedFieldOptions[key];
+    }
   }
 };
