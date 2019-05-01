@@ -83,9 +83,9 @@ const searchFilters = {
 
   handleClearAllForSection(e) {
     e.preventDefault();
+    const category = e.target.getAttribute("data-field-name");
     const allCheckboxesForSection = toArray(
-      e.target.closest(".js-search-filters-chip-list-item")
-        .querySelectorAll("input")
+      this.searchFiltersFormEl.querySelector(`.js-keys-list[data-field-name=${category}`).querySelectorAll("input")
     );
     allCheckboxesForSection.forEach(el => el.checked = false);
     this.updateChipButtonsState();
