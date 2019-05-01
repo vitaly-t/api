@@ -14,11 +14,11 @@
 .search-filters-chip {
   border: 1px solid #e6e6e6;
   border-radius: 20px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   font-weight: 600;
 }
-.search-filters-chip svg {
-  margin-left: 15px;
+.search-filters-chip-selected {
+  background-color: #e6e6e6;
 }
 .filter-list-pop-over {
   display: none;
@@ -26,9 +26,14 @@
   width: 40%;
   height: 300px;
   border: 1px solid #e6e6e6;
-  overflow: scroll;
   background-color: #fff;
-  padding: 20px;
+}
+.filter-list-pop-over-inner {
+  border-top: 25px solid #fff;
+  border-bottom: 25px solid #fff;
+  border-left: 25px solid #fff;
+  height: 250px;
+  overflow: scroll;
 }
 .keys-list li {
   overflow: auto;
@@ -41,9 +46,12 @@
 }
 .keys-list label {
   float: left;
-  width: 215px;
+  width: 90%;
 }
-
 .show-filter-list-popover {
   display: block;
+}
+.clear-all-link {
+  margin-left: 15px;
+  color: #aaa;
 }
