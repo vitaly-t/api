@@ -51,7 +51,16 @@
 .show-filter-list-popover {
   display: block;
 }
+.clear-all-link, .clear-section-link {
+  color: #aaa;
+  text-decoration: none;
+}
 .clear-all-link {
   margin-left: 15px;
-  color: #aaa;
+}
+.filter-list-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 25px;
 }
