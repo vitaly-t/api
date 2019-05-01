@@ -28,10 +28,6 @@ const searchFilters = {
       this.handleFormSubmit(e);
     });
 
-    this.checkboxEls.forEach(el => {
-      el.addEventListener("change", e => this.updateChipButtonsState(e));
-    });
-
     const clearAllLink = this.searchFiltersFormEl.querySelector(".js-clear-all-link");
     clearAllLink.addEventListener("click", e => this.handleClearAllClick(e));
 
@@ -88,7 +84,6 @@ const searchFilters = {
       this.searchFiltersFormEl.querySelector(`.js-keys-list[data-field-name=${category}`).querySelectorAll("input")
     );
     allCheckboxesForSection.forEach(el => el.checked = false);
-    this.updateChipButtonsState();
   },
 
   handleFormSubmit(e) {
@@ -101,6 +96,7 @@ const searchFilters = {
 
     const allPopOvers = toArray(document.querySelectorAll(".js-filter-list-pop-over"));
     const currentPopOverEl = e.target.closest("li").querySelector(".js-filter-list-pop-over");
+    const currentButton = e.target;
 
     // close all other open pop overs before opening the current clicked one
     allPopOvers.forEach(el => {
@@ -109,12 +105,21 @@ const searchFilters = {
       }
     });
 
+    // remove open class from chip button before opening a new one
+    this.chipButtonEls.forEach(el => el.classList.remove("search-filters-chip-open"));
+
+    this.updateChipButtonsState();
+
     // toggle current popover if you click the same chip button again
     if (currentPopOverEl.classList.contains("show-filter-list-popover")) {
       // hide popover
+      currentButton.classList.remove("search-filters-chip-open")
       currentPopOverEl.classList.remove("show-filter-list-popover");
+      this.updateChipButtonsState();
+      document.activeElement.blur();
     } else {
       // show popover
+      currentButton.classList.add("search-filters-chip-open")
       currentPopOverEl.classList.add("show-filter-list-popover");
     }
   }
