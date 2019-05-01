@@ -17,8 +17,12 @@
   padding: 6px 12px;
   font-weight: 600;
 }
-.search-filters-chip-selected {
+.search-filters-chip:focus {
+  outline: none;
+}
+.search-filters-chip-selected, .search-filters-chip-open {
   background-color: #e6e6e6;
+  outline: 0;
 }
 .filter-list-pop-over {
   display: none;
