@@ -1,9 +1,7 @@
 import { updateUrlParams } from "./utils/utils.js";
 
 // todo:
-// - update button chip to show if there are selected filters or not
 // - adjust placement of filter list pop over if near edge of screen
-// - add clear all button to pop overs and next to filter search button
 // - on submit add selected filters as params to url
 // - on load select inputs and chip buttons that correspond to the url params
 
@@ -18,13 +16,12 @@ const searchFilters = {
     this.searchFiltersListEl = document.querySelector(".js-search-filters-chip-list");
     this.checkboxEls = toArray(this.searchFiltersFormEl.querySelectorAll("input[type=checkbox]"));
 
-    const chipButtonEls = toArray(
+    this.chipButtonEls = toArray(
       this.searchFiltersListEl.querySelectorAll(".js-search-filters-chip")
     );
-    chipButtonEls.forEach(el => {
-      el.addEventListener("click", e => {
-        this.handleChipButtonClick(e);
-      });
+
+    this.chipButtonEls.forEach(el => {
+      el.addEventListener("click", e => this.handleChipButtonClick(e));
     });
 
     this.searchFiltersFormEl.addEventListener("submit", e => {
@@ -32,9 +29,17 @@ const searchFilters = {
     });
 
     this.checkboxEls.forEach(el => {
-      el.addEventListener("change", (e) => {
-        this.handleCheckBoxChange(e);
-      });
+      el.addEventListener("change", e => this.updateChipButtonsState(e));
+    });
+
+    const clearAllLink = this.searchFiltersFormEl.querySelector(".js-clear-all-link");
+    clearAllLink.addEventListener("click", e => this.handleClearAllClick(e));
+
+    const clearSectionLinks = toArray(
+      this.searchFiltersFormEl.querySelectorAll(".js-clear-section-link")
+    );
+    clearSectionLinks.forEach(el => {
+      el.addEventListener("click", e => this.handleClearAllForSection(e));
     });
   },
 
@@ -55,18 +60,35 @@ const searchFilters = {
     return selectedFilters;
   },
 
-  handleCheckBoxChange(e) {
-    const selectedCheckbox = e.target;
-    const currentKeysList = selectedCheckbox.closest(".js-keys-list");
-    const parentButton = selectedCheckbox.closest(".js-search-filters-chip-list-item").querySelector(".js-search-filters-chip");
+  updateChipButtonsState() {
+    this.chipButtonEls.forEach(el => {
+      const hasCheckedItems = el.closest(".js-search-filters-chip-list-item")
+        .querySelectorAll("input:checked").length > 0;
+      if (hasCheckedItems) {
+        el.classList.add("search-filters-chip-selected");
+      } else {
+        el.classList.remove("search-filters-chip-selected");
+      }
+    });
+  },
 
-    // if there are any selected checkboxes in the current list, show selected button state,
-    // otherwise show deselected button state
-    if (currentKeysList.querySelectorAll("input:checked").length > 0) {
-      parentButton.classList.add("search-filters-chip-selected");
-    } else {
-      parentButton.classList.remove("search-filters-chip-selected");
-    }
+  handleClearAllClick(e) {
+    e.preventDefault();
+    const allCheckboxes = toArray(
+      this.searchFiltersFormEl.querySelectorAll("input:checked")
+    );
+    allCheckboxes.forEach(el => el.checked = false);
+    this.updateChipButtonsState();
+  },
+
+  handleClearAllForSection(e) {
+    e.preventDefault();
+    const allCheckboxesForSection = toArray(
+      e.target.closest(".js-search-filters-chip-list-item")
+        .querySelectorAll("input")
+    );
+    allCheckboxesForSection.forEach(el => el.checked = false);
+    this.updateChipButtonsState();
   },
 
   handleFormSubmit(e) {
