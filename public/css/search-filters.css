@@ -23,7 +23,7 @@
 .filter-list-pop-over {
   display: none;
   position: absolute;
-  width: 40%;
+  width: 400px;
   height: 300px;
   border: 1px solid #e6e6e6;
   background-color: #fff;

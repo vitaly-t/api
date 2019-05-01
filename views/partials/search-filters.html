@@ -12,10 +12,10 @@
           <div class="filter-list-pop-over-inner">
             {{#each fieldNameKeys}}
               <div class="filter-list-header">
-                <h4>{{this}}</h4>
-                <a href="#" class="clear-section-link js-clear-section-link">Clear Category</a>
+                <h4>{{label static this}}</h4>
+                <a href="#" class="clear-section-link js-clear-section-link" data-field-name="{{this}}">Clear Category</a>
               </div>
-              <ul class="unstyled-list keys-list js-keys-list">
+              <ul class="unstyled-list keys-list js-keys-list" data-field-name="{{this}}">
                 {{#each (getOptionsForFilterKey this)}}
                   <li>
                     <input
