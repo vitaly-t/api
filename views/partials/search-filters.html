@@ -13,7 +13,7 @@
             {{#each fieldNameKeys}}
               <div class="filter-list-header">
                 <h4>{{label this}}</h4>
-                <a href="#" class="clear-section-link js-clear-section-link" data-field-name="{{this}}">Clear Category</a>
+                <a href="#" class="clear-section-link js-clear-section-link" data-field-name="{{this}}">{{t "Clear Category"}}</a>
               </div>
               <ul class="unstyled-list keys-list js-keys-list" data-field-name="{{this}}">
                 {{#each (getOptionsForFilterKey this)}}
@@ -36,9 +36,9 @@
     {{/each}}
     <li>
       <button class="button button-red button-condensed" type="submit">
-        {{> icon-filter }} Filter
+        {{> icon-filter }} {{t "Filter"}}
       </button>
-      <a href="#" class="clear-all-link js-clear-all-link">Clear All</a>
+      <a href="#" class="clear-all-link js-clear-all-link">{{t "Clear All"}}</a>
     </li>
   </ul>
 </form>
