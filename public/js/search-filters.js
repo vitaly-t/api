@@ -112,12 +112,14 @@ const searchFilters = {
 
   handleFormSubmit(e) {
     e.preventDefault();
+    // remove old filters
     removeUrlParams(CASE_SEARCH_FILTER_KEYS);
     const selectedFilters = this.getState();
+    // add new filters as params
     Object.keys(selectedFilters).forEach(key => {
-      // todo - we need to remove all old filter params and add new params
       updateUrlParams(key, selectedFilters[key]);
     });
+    // load new url
     location.href = location.href;
   },
 
