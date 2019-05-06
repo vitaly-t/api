@@ -1,11 +1,13 @@
-import { updateUrlParams } from "./utils/utils.js";
+import { updateUrlParams, removeUrlParams } from "./utils/utils.js";
+import searchFiltersList from "../../api/helpers/search-filters-list.js";
+
+const CASE_SEARCH_FILTER_KEYS = [];
+searchFiltersList.case.forEach(item => {
+  item.fieldNameKeys.forEach(key => CASE_SEARCH_FILTER_KEYS.push(key));
+});
 
 // todo:
 // - adjust placement of filter list pop over if near edge of screen
-// - on submit add selected filters as params to url
-// - on clear all, should clear url params
-// - on tab change, should clear url params
-// - on load select inputs and chip buttons that correspond to the url params
 
 const toArray = (nodeList) => Array.prototype.slice.call(nodeList);
 
@@ -56,7 +58,6 @@ const searchFilters = {
         }
       }
     });
-    console.log("selectedFilters", selectedFilters)
     return selectedFilters;
   },
 
@@ -95,6 +96,8 @@ const searchFilters = {
     );
     allCheckboxes.forEach(el => el.checked = false);
     this.updateChipButtonsState();
+    removeUrlParams(CASE_SEARCH_FILTER_KEYS);
+    location.href = location.href;
   },
 
   handleClearAllForSection(e) {
@@ -104,10 +107,12 @@ const searchFilters = {
       this.searchFiltersFormEl.querySelector(`.js-keys-list[data-field-name=${category}`).querySelectorAll("input")
     );
     allCheckboxesForSection.forEach(el => el.checked = false);
+    removeUrlParams(CASE_SEARCH_FILTER_KEYS);
   },
 
   handleFormSubmit(e) {
     e.preventDefault();
+    removeUrlParams(CASE_SEARCH_FILTER_KEYS);
     const selectedFilters = this.getState();
     Object.keys(selectedFilters).forEach(key => {
       // todo - we need to remove all old filter params and add new params

@@ -22,20 +22,18 @@ function updateUrlParams(key, value) {
 
 function removeUrlParams(keysToRemove) {
   if (!window.location.search) return;
-  console.log("keysToRemove", keysToRemove)
-  const currentParams = {};
-  const paramsArr = window.location.search.split("?")[1].split("&").map(p => p.split("="));
-  paramsArr.forEach(param => currentParams[param[0]] = param[1]);
-
-  console.log('currentParams', currentParams)
-
-  const newParams = {};
-
-  console.log('newParams', newParams)
+  const paramsToKeep = {};
+  window.location.search
+    .split("?")[1].split("&").map(p => p.split("="))
+    .forEach(param => {
+      if (!keysToRemove.includes(param[0])) {
+        paramsToKeep[param[0]] = param[1];
+      }
+    });
 
   let newParamsString = "";
-  Object.keys(newParams).forEach(key => {
-    newParamsString += `${key}=${newParams[key]}&`;
+  Object.keys(paramsToKeep).forEach(key => {
+    newParamsString += `${key}=${paramsToKeep[key]}&`;
   });
 
   // update url without reloading page
