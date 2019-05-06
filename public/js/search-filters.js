@@ -6,9 +6,6 @@ searchFiltersList.case.forEach(item => {
   item.fieldNameKeys.forEach(key => CASE_SEARCH_FILTER_KEYS.push(key));
 });
 
-// todo:
-// - adjust placement of filter list pop over if near edge of screen
-
 const toArray = (nodeList) => Array.prototype.slice.call(nodeList);
 
 const searchFilters = {
