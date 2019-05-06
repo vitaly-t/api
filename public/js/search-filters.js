@@ -3,6 +3,8 @@ import { updateUrlParams } from "./utils/utils.js";
 // todo:
 // - adjust placement of filter list pop over if near edge of screen
 // - on submit add selected filters as params to url
+// - on clear all, should clear url params
+// - on tab change, should clear url params
 // - on load select inputs and chip buttons that correspond to the url params
 
 const toArray = (nodeList) => Array.prototype.slice.call(nodeList);
@@ -37,6 +39,8 @@ const searchFilters = {
     clearSectionLinks.forEach(el => {
       el.addEventListener("click", e => this.handleClearAllForSection(e));
     });
+
+    this.updateUIFromUrlParams();
   },
 
   getState() {
@@ -54,6 +58,22 @@ const searchFilters = {
     });
     console.log("selectedFilters", selectedFilters)
     return selectedFilters;
+  },
+
+  updateUIFromUrlParams() {
+    const paramsFromUrl = {};
+    window.location.search
+      .split("?")[1].split("&").map(p => p.split("="))
+      .forEach(param => paramsFromUrl[param[0]] = param[1]);
+
+    Object.keys(paramsFromUrl).forEach(key => {
+      const values = paramsFromUrl[key].split(",");
+      values.forEach(value => {
+        const input = document.getElementById(`${key}[${value}]`);
+        if (input) input.checked = true;
+      });
+    });
+    this.updateChipButtonsState();
   },
 
   updateChipButtonsState() {
@@ -89,6 +109,11 @@ const searchFilters = {
   handleFormSubmit(e) {
     e.preventDefault();
     const selectedFilters = this.getState();
+    Object.keys(selectedFilters).forEach(key => {
+      // todo - we need to remove all old filter params and add new params
+      updateUrlParams(key, selectedFilters[key]);
+    });
+    location.href = location.href;
   },
 
   handleChipButtonClick(e) {
