@@ -142,17 +142,26 @@ const searchFilters = {
 
     this.updateChipButtonsState();
 
+    const xPosOfCurrentButton =
+      currentButton.getBoundingClientRect().x + currentButton.getBoundingClientRect().width;
+    const shouldRenderOnRight = window.innerWidth - xPosOfCurrentButton < 300;
+
     // toggle current popover if you click the same chip button again
     if (currentPopOverEl.classList.contains("show-filter-list-popover")) {
       // hide popover
       currentButton.classList.remove("search-filters-chip-open")
       currentPopOverEl.classList.remove("show-filter-list-popover");
+      currentPopOverEl.style.marginLeft = 0;
       this.updateChipButtonsState();
       document.activeElement.blur();
     } else {
       // show popover
       currentButton.classList.add("search-filters-chip-open")
       currentPopOverEl.classList.add("show-filter-list-popover");
+      if (shouldRenderOnRight) {
+        const popOverOffset = currentPopOverEl.clientWidth - currentButton.clientWidth;
+        currentPopOverEl.style.marginLeft = `-${popOverOffset}px`;
+      }
     }
   }
 };

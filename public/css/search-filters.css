@@ -39,6 +39,9 @@
   height: 250px;
   overflow: scroll;
 }
+.keys-list {
+  margin-bottom: 20px;
+}
 .keys-list li {
   overflow: auto;
 }
@@ -67,4 +70,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin-right: 25px;
+}
+.filter-list-header h4 {
+  margin-bottom: 15px;
 }
