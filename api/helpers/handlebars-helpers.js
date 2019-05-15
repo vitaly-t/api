@@ -201,15 +201,21 @@ module.exports = {
     }
   },
 
-  getArrayOfValues: (article, name, context) => {
+  getLocalizedArrayOfOptions: (article, name, context) => {
     const arrayOfItems = article[name];
     if (!arrayOfItems || arrayOfItems.length === 0) return;
 
     return arrayOfItems.map(item => {
       if (typeof item === "string") {
-        return i18n(`name:${name}-key:${item}`, context);
+        return {
+          key: item,
+          value: i18n(`name:${name}-key:${item}`, context)
+        };
       } else {
-        return i18n(`name:${name}-key:${item.key}`, context);
+        return {
+          key: item.key,
+          value: i18n(`name:${name}-key:${item.key}`, context)
+        };
       }
     });
   },

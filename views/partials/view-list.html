@@ -1,12 +1,12 @@
 {{#if (getvalue article name) }}
-<dl>
+<dl data-cy-name="{{name}}">
   <dt>{{label article name}}</dt>
   {{#if (isArray article name)}}
-    {{#each (getArrayOfValues article name) }}
-      <dd>{{this}}</dd>
+    {{#each (getLocalizedArrayOfOptions article name) }}
+      <dd data-cy-key="{{this.key}}">{{this.value}}</dd>
     {{/each}}
   {{else}}
-    <dd>{{getArticleSelectValue article name}}</dd>
+    <dd data-cy-key="{{getvalue article name}}">{{getArticleSelectValue article name}}</dd>
   {{/if}}
 </dl>
 {{/if}}
