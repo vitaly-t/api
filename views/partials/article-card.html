@@ -8,8 +8,8 @@
 >
   <a href="/{{type}}/{{id}}" class="js-article-link">
     <div
-      class="article-card-img js-article-card-img"
-      style="background-image: url('{{getFirstImageForArticle this}}')"
+      class="article-card-img js-article-card-img js-lazy-load"
+      data-bg="url('{{getFirstImageForArticle this}}')"
     ></div>
 
     <div class="article-card-content">

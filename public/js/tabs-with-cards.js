@@ -1,3 +1,4 @@
+import LazyLoad from "vanilla-lazyload";
 import { getValueForParam, updateUrlParams } from "./utils/utils.js";
 
 const tabsWithCards = {
@@ -8,6 +9,11 @@ const tabsWithCards = {
     this.viewEl = document.querySelector("[data-card-layout]");
 
     if (this.tabInputEls.length === 0) return;
+
+    // lazy load images
+    new LazyLoad({
+      elements_selector: ".js-lazy-load",
+    });
 
     // tabs ui
     this.initDesktopTabNav();
