@@ -705,7 +705,6 @@
   "add_another_link": "Add another link",
   "type_purpose_sectionlabel": "Type & Purpose",
   "suitable_for_sectionlabel": "Suitable For",
-<<<<<<< HEAD
   "organization_view_links_label": "Links",
     "name:general_issues-key:agriculture": "Agriculture, Forestry, Fishing & Mining Industries",
   "name:general_issues-key:arts": "Arts, Culture, & Recreation",
@@ -1365,7 +1364,7 @@
   "Featured Entries": "Featured Entries",
   "map information": "map information",
   "Click anywhere to activate map": "Click anywhere to activate map",
-  "main_tagline": "A global community sharing knowledge and stories about public participation and democratic innovations"
+  "main_tagline": "A global community sharing knowledge and stories about public participation and democratic innovations",
   "level_polarization_label": "Level of Polarization This Method Can Handle",
   "level_polarization_instructional": "Select the level of political polarization this method can handle.",
   "level_polarization_placeholder": "Select level of polarization",
@@ -1383,7 +1382,6 @@
   "evaluation_links_link_label": "Evaluation Report Links",
   "evaluation_links_url_placeholder": "Add link",
   "evaluation_links_title_instructional": "Provide a title or description of this linked content in 10 words or less.",
-  "add_another_link": "Add Another Link",
   "audio_link_instructional": "Add links to audio, such as podcasts.",
   "audio_url_placeholder": "Add link to audio",
   "videos_url_placeholder": "Add link to video",
@@ -1394,7 +1392,6 @@
   "description_label": "Brief Description",
   "description_instructional": "Enter tweet-length (280 characters or less) description of this case.",
   "facilitators_placeholder": "Did facilitators help guide participants?",
-  "description_narrative_sectionlabel": "Description and Narrative",
   "evaluation_reports_link_instructional": "If applicable, provide a link to where the original file was sourced.",
   "evaluation_reports_link_placeholder": "Link to original",
   "evaluation_reports_attribution_instructional": "Who is the original owner or creator of this file?",
