@@ -42,6 +42,7 @@ body {
   font-size: 1rem; /* 16px */
   font-weight: 300;
   line-height: 1.5; /* 24px */
+  background: url("/images/grid-temp.png") no-repeat fixed;
 }
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;

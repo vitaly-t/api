@@ -6,14 +6,14 @@
 }
 
 .reader-view aside {
-  width: 27%;
-  margin: 0 90px 0 30px;
+  width: 200px;
+  margin: 0 60px 0 30px;
   word-break: break-word;
 }
 
 .reader-view article {
-  width: 46%;
-  margin-right: 27%;
+  width: 48%;
+  margin-right: 30px;
   display: flex;
   flex-direction: column;
 }
@@ -37,10 +37,6 @@
 }
 
 .reader-view .social-links {
-  order: -1;
-  width: 30px;
-  position: absolute;
-  margin-left: 42%;
   text-align: center;
 }
 
