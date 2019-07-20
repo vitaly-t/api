@@ -45,8 +45,8 @@
           <span class="sr-only">{{t "open menu"}}</span>
           {{> icon-hamburger }}
         </a>
+        <a href="/" class="header-logo">Participedia</a>
       </li>
-      <li class="header-logo-container"><a href="/">Participedia</a></li>
       <li class="header-search-container">
         <form action="/">
           <input name="query" type="text" placeholder={{t "Search"}} value="{{req.query.query}}" />
@@ -55,12 +55,10 @@
           </div>
         </form>
       </li>
-      <li class="quick-submit-container">
-        <a href="/content-chooser" class="button button-white">
+      <li class="header-buttons">
+        <a href="/content-chooser" class="button button-white quick-submit-button">
           {{> icon-add }} {{t "Quick Submit"}}
         </a>
-      </li>
-      <li>
         {{#if req.user}}
           <div class="profile-dropdown-button-container js-profile-dropdown-button-container">
             <button class="button button-with-icon profile-dropdown-button-trigger js-profile-dropdown-button-trigger">

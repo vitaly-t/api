@@ -11,11 +11,7 @@ header a {
   text-decoration: none;
 }
 
-.header-logo-container {
-  flex: 4;
-}
-
-.header-logo-container a {
+.header-logo {
   font-size: 1.4rem;
   font-weight: 800;
   color: #fff;
@@ -31,6 +27,7 @@ header a {
 .horizontal-menu .nav-list {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .horizontal-menu .nav-list li {
@@ -38,7 +35,7 @@ header a {
 }
 
 .header-search-container {
-  margin-right: 100px;
+  margin-right: 60px;
   flex-basis: 50%;
 }
 
@@ -129,8 +126,14 @@ header a {
   overflow: hidden;
 }
 
-.quick-submit-container {
+.quick-submit-button {
   margin-right: 9px;
+}
+
+.menu-icon-container {
+  display: flex;
+  align-items: center;
+  width: 200px;
 }
 
 .menu-icon-container a {
@@ -288,12 +291,8 @@ header a {
     margin-top: 1px;
   }
 
-  .quick-submit-container {
+  .quick-submit-button {
     display: none;
-  }
-
-  .header-logo-container {
-    flex-basis: 50%;
   }
 
   .header-search-container {
