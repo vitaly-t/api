@@ -34,11 +34,6 @@ header a {
   align-self: center;
 }
 
-.header-search-container {
-  margin-right: 60px;
-  flex-basis: 50%;
-}
-
 .header-search-container form {
   display: flex;
   flex-direction: row;
