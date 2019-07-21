@@ -100,6 +100,23 @@ a {
   top: -10px;
 }
 
+.full-width-container {
+  width: calc(100% - 60px);
+  margin: 0 30px;
+  display: flex;
+  flex-direction: row;
+}
+.full-width-container .left-col {
+  width: 200px;
+  margin-right: 60px;
+}
+.full-width-container .middle-col {
+  flex-grow: 1;
+}
+.full-width-container .right-col {
+  width: 25%;
+}
+
 /*
   replace nav-list class with unstyled-list in header and footer,
   since lists can be used for things that are not nav
