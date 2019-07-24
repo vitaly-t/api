@@ -3,7 +3,7 @@ let express = require("express");
 let router = express.Router(); // eslint-disable-line new-cap
 let cache = require("apicache");
 let { db, as, USER_BY_ID, UPDATE_USER } = require("../helpers/db");
-let { fixUpURLs } = require("../helpers/things");
+let { fixUpURLsWithRandomTexture } = require("../helpers/things");
 
 const logError = require("../helpers/log-error.js");
 
@@ -22,10 +22,10 @@ async function getUserById(userId, req, res, view = "view") {
     if (!result) {
       return null;
     }
-    result.user.bookmarks.forEach(fixUpURLs);
-    result.user.cases.forEach(fixUpURLs);
-    result.user.methods.forEach(fixUpURLs);
-    result.user.organizations.forEach(fixUpURLs);
+    result.user.bookmarks.forEach(fixUpURLsWithRandomTexture);
+    result.user.cases.forEach(fixUpURLsWithRandomTexture);
+    result.user.methods.forEach(fixUpURLsWithRandomTexture);
+    result.user.organizations.forEach(fixUpURLsWithRandomTexture);
 
     // if (result.user.bookmarks) {
     //   result.user.bookmarks.forEach(b => (b.bookmarked = true));
