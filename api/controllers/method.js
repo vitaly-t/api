@@ -147,7 +147,7 @@ async function postMethodUpdateHttp(req, res) {
 
   // if this is a new method, we don't have a post_date yet, so we set it here
   if (!newMethod.post_date) {
-    newMethod.post_date = Date.now();
+    newMethod.post_date = moment(Date.now()).format();
   }
 
   // console.log(

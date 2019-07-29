@@ -27,7 +27,7 @@ const editForm = {
         this.openInfoModal(event);
       });
     }
-    
+
     // if this page was loaded with the refreshAndClose param, we can close it programmatically
     // this is part of the flow to refresh auth state
     if (window.location.search.indexOf("refreshAndClose") > 0) {
@@ -64,7 +64,7 @@ const editForm = {
   sendFormData(event) {
     event.preventDefault();
     const formEl = document.querySelector(".js-edit-form");
-
+    console.log("here")
     if (!formEl) return;
 
     const formData = serialize(formEl);
@@ -74,10 +74,6 @@ const editForm = {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr.onreadystatechange = () => {
-      if (xhr.readyState === 2) {
-        this.openPublishingFeedbackModal();
-      }
-
       // wait for request to be done
       if (xhr.readyState !== xhr.DONE) return;
 
@@ -100,6 +96,8 @@ const editForm = {
       }
     }
 
+    // show publishing feedback right before we open the request
+    this.openPublishingFeedbackModal();
     xhr.send(formData);
   },
 

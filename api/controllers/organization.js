@@ -146,7 +146,7 @@ async function postOrganizationUpdateHttp(req, res) {
 
   // if this is a new organization, we don't have a post_date yet, so we set it here
   if (!newOrganization.post_date) {
-    newOrganization.post_date = Date.now();
+    newOrganization.post_date = moment(Date.now()).format();
   }
 
   const {
@@ -164,8 +164,8 @@ async function postOrganizationUpdateHttp(req, res) {
     if (updatedText) {
       await db.tx("update-organization", t => {
         return t.batch([
-          t.none(INSERT_AUTHOR, author),
-          t.none(INSERT_LOCALIZED_TEXT, updatedText),
+          // t.none(INSERT_AUTHOR, author),
+          // t.none(INSERT_LOCALIZED_TEXT, updatedText),
           t.none(UPDATE_ORGANIZATION, updatedOrganization)
         ]);
       });

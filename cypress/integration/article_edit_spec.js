@@ -31,7 +31,7 @@ function editFormTest(type) {
       cy.login();
     });
 
-    it(`authenticated and visits /${type}/${articleIds[type]}/edit`, () => {
+    it(`authenticated user visits /${type}/${articleIds[type]}/edit and submits form`, () => {
       cy.visit(`/${type}/${articleIds[type]}/edit`)
 
       // it has a submit button

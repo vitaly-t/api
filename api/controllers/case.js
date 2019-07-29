@@ -4,6 +4,7 @@ const cache = require("apicache");
 const log = require("winston");
 const equals = require("deep-equal");
 const fs = require("fs");
+const moment = require("moment");
 
 const {
   db,
@@ -124,12 +125,12 @@ function getUpdatedCase(user, params, newCase, oldCase) {
 
   // if this is a new case, we don't have a post_date yet, so we set it here
   if (!newCase.post_date) {
-    newCase.post_date = Date.now();
+    newCase.post_date = moment(Date.now()).format();
   }
 
   // set updated_date to now if not passed up by client
   if (!newCase.updated_date) {
-    newCase.updated_date = Date.now();
+    newCase.updated_date = moment(Date.now()).format();
   }
   cond("updated_date", as.date);
 
