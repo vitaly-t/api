@@ -1,18 +1,19 @@
 const promise = require("bluebird");
 const url = require("url");
 const { isArray, isObject, isDate, isString, uniq } = require("lodash");
-const SUPPORTED_LANGUAGES = require("../../constants").SUPPORTED_LANGUAGES.map(
-  locale => locale.twoLetterCode
-);
 const options = {
   // Initialization Options
   promiseLib: promise, // use bluebird as promise library
   capSQL: true // when building SQL queries dynamically, capitalize SQL keywords
 };
 const fs = require("fs");
-
+//if (process.env.LOG_QUERY === "true") {
+// options.query = evt => (process.env.LAST_QUERY = evt.query);
+// options.query = evt => console.log("QUERY: %s", evt.query);
+//}
 const pgp = require("pg-promise")(options);
 const path = require("path");
+const log = require("winston");
 const connectionString = process.env.DATABASE_URL;
 const parse = require("pg-connection-string").parse;
 let config;
@@ -30,6 +31,7 @@ try {
 }
 let db = pgp(config);
 
+const dbtagkeys = JSON.parse(fs.readFileSync("api/helpers/data/tagkeys.json"));
 const i18n_en = JSON.parse(fs.readFileSync("locales/en.js"));
 
 function sql(filename) {
@@ -76,7 +78,7 @@ function ErrorReporter() {
         return fn(...args);
       } catch (e) {
         self.errors.push(e.message);
-        logError(`ErrorReporter: ${e.message}`);
+        console.trace("Capturing error to report to client: " + e.message);
         return e.message;
       }
     };
@@ -92,9 +94,9 @@ function randomDelay() {
 }
 
 let _users;
-let _cases = {};
-let _methods = {};
-let _organizations = {};
+let _cases;
+let _methods;
+let _organizations;
 let _searchDirty = true;
 
 async function _listUsers() {
@@ -102,31 +104,29 @@ async function _listUsers() {
     "SELECT to_json(array_agg((id, name)::object_title)) AS authors FROM users;"
   )).authors;
   setTimeout(_listUsers, randomDelay());
+  // console.log("user cache refreshed");
 }
 
-async function _listCases(lang) {
+async function _listCases() {
   try {
-    _cases[lang] = await db.many(LIST_ARTICLES, { type: "cases", lang: lang });
+    _cases = await db.many(LIST_ARTICLES, { type: "cases", lang: "en" });
   } catch (e) {
-    logError(`Error in _listCases: ${e.message}`);
+    console.error("Error in _listCases: %s", e.message);
   }
-  setTimeout(_listCases, randomDelay(), lang);
+  setTimeout(_listCases, randomDelay());
 }
 
-async function _listMethods(lang) {
-  _methods[lang] = await db.many(LIST_ARTICLES, {
-    type: "methods",
-    lang: lang
-  });
-  setTimeout(_listMethods, randomDelay(), lang);
+async function _listMethods() {
+  _methods = await db.many(LIST_ARTICLES, { type: "methods", lang: "en" });
+  setTimeout(_listMethods, randomDelay());
 }
 
-async function _listOrganizations(lang) {
-  _organizations[lang] = await db.many(LIST_ARTICLES, {
+async function _listOrganizations() {
+  _organizations = await db.many(LIST_ARTICLES, {
     type: "organizations",
     lang: "en"
   });
-  setTimeout(_listOrganizations, randomDelay(), lang);
+  setTimeout(_listOrganizations, randomDelay());
 }
 
 async function _refreshSearch() {
@@ -137,39 +137,17 @@ async function _refreshSearch() {
   setTimeout(_refreshSearch, randomDelay());
 }
 
-async function cacheTitlesRefreshSearch(done) {
-  // if (!process.env.MIGRATIONS) {
-  if (process.env.NODE_ENV === "test") {
-    await _listUsers();
-    for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
-      let lang = SUPPORTED_LANGUAGES[i];
-      await _listCases(lang).then(() => console.log("%s cases cached", lang));
-      await _listMethods(lang).then(() =>
-        console.log("%s methods cached", lang)
-      );
-      await _listOrganizations(lang).then(() =>
-        console.log("%s organizations cached", lang)
-      );
-    }
-  } else {
-    _listUsers();
-    for (let i = 0; i < SUPPORTED_LANGUAGES.length; i++) {
-      let lang = SUPPORTED_LANGUAGES[i];
-      _listCases(lang).then(() => console.log("%s cases cached", lang));
-      _listMethods(lang).then(() => console.log("%s methods cached", lang));
-      _listOrganizations(lang).then(() =>
-        console.log("%s organizations cached", lang)
-      );
-    }
-  }
-  // keep running these, but we can start the server now
+if (!process.env.MIGRATIONS) {
+  _listUsers();
+  _listCases().then(() => console.log("cases cached"));
+  _listMethods().then(() => console.log("methods cached"));
+  _listOrganizations().then(() => console.log("organizations cached"));
   _refreshSearch().then(() => console.log("search refreshed"));
   db.none("UPDATE localizations SET keyvalues = ${keys} WHERE language='en'", {
     keys: i18n_en
-  }).then(() => console.log("i18n updated"));
-  if (done) {
-    done();
-  }
+  })
+    .then(() => console.log("i18n updated"))
+    .catch(error => console.error(error));
 }
 
 function refreshSearch() {
@@ -180,26 +158,22 @@ function listUsers() {
   return _users;
 }
 
-function listCases(lang) {
-  return _cases[lang];
+function listCases() {
+  return _cases;
 }
 
-function listMethods(lang) {
-  return _methods[lang];
+function listMethods() {
+  return _methods;
 }
 
-function listOrganizations(lang) {
-  return _organizations[lang];
+function listOrganizations() {
+  return _organizations;
 }
 
 // as.number, enhances existing as.number to cope with numbers as strings
 function number(value) {
   if (value === "") {
     return null;
-  }
-  let numValue = Number(value);
-  if (Number.isNaN(numValue)) {
-    return numValue;
   }
   return pgp.as.number(Number(value));
 }
@@ -208,11 +182,14 @@ function integer(value) {
   if (value === "") {
     return null;
   }
-  let intValue = parseInt(value, 10);
-  if (Number.isNaN(intValue)) {
-    return intValue;
+  if (value === "NaN") {
+    throw new Error('Expected integer, got "NaN" as a string');
   }
-  return pgp.as.number(intValue);
+  let retVal = pgp.as.number(parseInt(value, 10));
+  if (Number.isNaN(retVal)) {
+    throw new Error("Expected integer value, got " + value);
+  }
+  return retVal;
 }
 
 function asFloat(value) {
@@ -264,7 +241,7 @@ function asUrl(value) {
     return escapedText("");
   }
   if (isObject(value)) {
-    logError(`Expecting URL, received: ${value}`);
+    console.error("Expecting URL, received: %s", value);
     throw new Error("Not a URL: " + value);
     return escapedText("");
   }
@@ -275,7 +252,7 @@ function asUrl(value) {
     // return new URL(value).href;
     return escapedText(new URL(value).href);
   } catch (e) {
-    logError(`Expecting URL, received: ${value}`);
+    console.error("Expected URL, received: %s", JSON.stringify(value));
     throw e;
   }
 }
@@ -349,7 +326,11 @@ function casekeys(objList, group) {
       uniq((objList || []).map(k => casekey(k, group)).filter(x => !!x)) || "{}"
     );
   } catch (e) {
-    logError(`Error attempting to convert and filter a list of keys for ${group}`);
+    console.error(
+      "Attempting to convert and filter a list of keys for %s, but got %s for the list",
+      group,
+      JSON.stringify(objList)
+    );
     throw e;
   }
 }
@@ -360,6 +341,33 @@ const methodkeys = casekeys;
 const organizationkey = casekey;
 const organizationkeyflat = casekeyflat;
 const organizationkeys = casekeys;
+
+function tagkey(obj) {
+  if (obj === undefined) {
+    throw new Error("Object cannot be undefined for tag");
+  }
+  if (isString(obj)) {
+    if (dbtagkeys.includes(obj)) {
+      return obj;
+    } else {
+      console.warn("failed tag: %s", obj);
+      return null;
+    }
+  }
+  if (obj.key === undefined) {
+    throw new Error("Key cannot be undefined for tag");
+  }
+  if (dbtagkeys.includes(obj.key)) {
+    return obj.key;
+  } else {
+    console.warn("failed tag: %s", obj.key);
+  }
+  return null;
+}
+
+function tagkeys(objList) {
+  return uniq((objList || []).map(tagkey).filter(x => !!x));
+}
 
 function FullFile(obj) {
   this.rawType = true;
@@ -477,6 +485,7 @@ const as = Object.assign({}, pgp.as, {
   organizationkeyflat,
   organizationkeys,
   richtext,
+  tagkeys,
   text,
   url: asUrl,
   urls,
@@ -495,7 +504,6 @@ module.exports = {
   listMethods,
   listOrganizations,
   refreshSearch,
-  cacheTitlesRefreshSearch,
   INSERT_LOCALIZED_TEXT,
   UPDATE_NOUN,
   INSERT_AUTHOR,

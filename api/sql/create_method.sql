@@ -4,7 +4,7 @@ WITH insert_method as (
   )
   VALUES
     (
-      'method', ${original_language}, 'now', true, 'now'
+      'method', ${language}, 'now', true, 'now'
     ) RETURNING id as thingid
 )
 
@@ -14,7 +14,7 @@ VALUES
     ${body},
     ${title},
     ${description},
-    ${original_language},
+    ${language},
     (select thingid from insert_method)
   ) RETURNING thingid
 ;

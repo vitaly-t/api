@@ -94,8 +94,6 @@ const searchFilters = {
     allCheckboxes.forEach(el => el.checked = false);
     this.updateChipButtonsState();
     removeUrlParams(CASE_SEARCH_FILTER_KEYS);
-    // load new url without filter
-    location.href = location.href;
   },
 
   handleClearAllForSection(e) {

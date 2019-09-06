@@ -2,31 +2,11 @@
 <dl>
   <dt>{{label article name}}</dt>
   {{#if (isArray article name)}}
-    {{#each (getLocalizedValuesForKeys article name) }}
-      {{#if (isLinkableTerm ../article ../name)}}
-        <dd>
-          <a
-            href="{{getSearchLinkForTerm ../article ../name key}}"
-          >
-            {{localizedValue}}
-          </a>
-        </dd>
-      {{else}}
-        <dd>{{localizedValue}}</dd>
-      {{/if}}
+    {{#each (getArrayOfValues article name) }}
+      <dd>{{this}}</dd>
     {{/each}}
   {{else}}
-    {{#if (isLinkableTerm article name)}}
-      <dd>
-        <a
-          href="{{getSearchLinkForTerm article name (lookup article name)}}"
-        >
-          {{getArticleSelectValue article name}}
-        </a>
-      </dd>
-    {{else}}
-      <dd>{{getArticleSelectValue article name}}</dd>
-    {{/if}}
+    <dd>{{getArticleSelectValue article name}}</dd>
   {{/if}}
 </dl>
 {{/if}}

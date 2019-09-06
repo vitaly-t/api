@@ -24,13 +24,6 @@ const partners = [
         ]
       },
       {
-        "name": "Eileen Alma",
-        "descriptors": [
-          "Coady International Institute",
-          "St. Francis Xavier University"
-        ]
-      },
-      {
         "name": "Julia Abelson",
         "descriptors": [
           "Centre for Health Economics and Policy Analysis",
@@ -225,6 +218,13 @@ const partners = [
         "descriptors": [
           "Centro de Estudo Sociais",
           "Universidade de Coimbra"
+        ]
+      },
+      {
+        "name": "Dietlind Stolle",
+        "descriptors": [
+          "Centre for the Study of Democratic Citizenship",
+          "McGill University"
         ]
       },
       {

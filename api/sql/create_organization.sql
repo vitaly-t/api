@@ -4,7 +4,7 @@ WITH insert_organization as (
   )
   VALUES
     (
-      'organization', ${original_language}, 'now', true, 'now'
+      'organization', ${language}, 'now', true, 'now'
     ) RETURNING id as thingid
 )
 
@@ -14,7 +14,7 @@ VALUES
     ${body},
     ${title},
     ${description},
-    ${original_language},
+    ${language},
     (select thingid from insert_organization)
   ) RETURNING thingid
 ;

@@ -7,6 +7,7 @@ SELECT
   COALESCE(specific_topics, '{}') as specific_topics,
   COALESCE(description, '') as description,
   body,
+  tags,
   location_name,
   address1,
   address2,

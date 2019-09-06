@@ -3,7 +3,7 @@ const searchFiltersList = {
     {
       sectionKey: "overview",
       sectionLabel: "Overview",
-      fieldNameKeys: ["general_issues"]
+      fieldNameKeys: ["general_issues", "tags"]
     },
     {
       sectionKey: "location",
